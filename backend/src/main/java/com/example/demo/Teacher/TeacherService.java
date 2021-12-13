@@ -21,6 +21,10 @@ public class TeacherService {
         return teacherRepo.findAll();
     }
 
+    public int getTeacher(String username){
+        return teacherRepo.findTeacherIdByUsername(username);
+    }
+
     public void createTeacher(Teacher teacher){
         teacherRepo.save(teacher);
     }

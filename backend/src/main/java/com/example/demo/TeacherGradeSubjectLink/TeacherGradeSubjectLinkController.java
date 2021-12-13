@@ -3,6 +3,8 @@ package com.example.demo.TeacherGradeSubjectLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(path="link")
@@ -16,7 +18,7 @@ public class TeacherGradeSubjectLinkController {
     }
 
     @PostMapping
-    public void createLink(@RequestBody TeacherGradeSubjectLink teacherGradeSubjectLink){
+    public void createLink(@RequestBody ArrayList<TeacherGradeSubjectLink> teacherGradeSubjectLink){
 
         teacherGradeSubjectLinkService.createLink(teacherGradeSubjectLink);
     }
