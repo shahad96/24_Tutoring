@@ -1,3 +1,4 @@
+import '../subject.css';
 import { useSelector } from "react-redux";
 import Subject from "./Subject";
 
@@ -9,7 +10,7 @@ function Subjects(){
       });
      
 return(
-    <div>
+    <div id="grid">
         {state.subjects.map((ele, index) => <Subject index={index} ele={ele}/>)}
     </div>
 );

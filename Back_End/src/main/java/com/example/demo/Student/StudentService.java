@@ -42,6 +42,10 @@ public class StudentService /*implements UserDetailsService*/ {
         return studentRepo.findGradeIdByUsername(username);
     }
 
+    public Student getStudentByUsername(String username){
+        return studentRepo.findByUsername(username);
+    }
+
     public Student createStudent(Student student){
         return studentRepo.save(student);
     }

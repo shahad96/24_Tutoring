@@ -2,8 +2,8 @@ const initialState = {
    subjects:[],
    gradeId:0,
    teacherSlectedSubjects:[],
-   cardColorIndex:0,
-   cardColors:["#71B48F","#77C6DC","#E2B952","#DB7451"]
+   cardColors:["#71B48F","#77C6DC","#E2B952","#DB7451"],
+   offerSubject:{}
   };
   
   const Subjects = (state = initialState, { type, payload }) => {
@@ -13,39 +13,32 @@ const initialState = {
             subjects: payload,
             gradeId:state.gradeId,
             teacherSlectedSubjects:state.teacherSlectedSubjects,
-            cardColorIndex: state.cardColor,
-            cardColors:state.cardColors
+            cardColors:state.cardColors,
+            offerSubject:state.offerSubject
         };
       case "SET_GRADE_ID":
         return {
           subjects:state.subjects,
           gradeId: payload,
           teacherSlectedSubjects:state.teacherSlectedSubjects,
-          cardColorIndex: state.cardColor,
-          cardColors:state.cardColors
+          cardColors:state.cardColors,
+          offerSubject:state.offerSubject
         };
         case "SET_TEACHER_SUBJECTS":
         return {
           subjects:state.subjects,
           gradeId: state.gradeId,
           teacherSlectedSubjects:payload,
-          cardColorIndex: state.cardColor,
-          cardColors:state.cardColors
+          cardColors:state.cardColors,
+          offerSubject:state.offerSubject
         };
-        case "CHANGE_CARD_COLOR":
-              let color
-          if (state.cardColor<4){
-            color = state.cardColor+1
-          }
-          else{
-            color = 1
-          }
+        case "SET_OFFER_SUBJECT":
         return {
           subjects:state.subjects,
           gradeId: state.gradeId,
           teacherSlectedSubjects:state.teacherSlectedSubjects,
-          cardColorIndex: color,
-          cardColors:state.cardColors
+          cardColors:state.cardColors,
+          offerSubject:payload
         };
       default:
         return state;
@@ -75,8 +68,9 @@ const initialState = {
     };
   };
 
-  export const changeCardColor = () => {
+  export const setOfferSubject = (subjects) => {
     return {
-      type: "CHANGE_CARD_COLOR",
+      type: "SET_OFFER_SUBJECT",
+      payload: subjects,
     };
   };

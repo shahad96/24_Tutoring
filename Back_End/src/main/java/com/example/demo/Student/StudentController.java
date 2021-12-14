@@ -29,6 +29,12 @@ public class StudentController {
         return studentService.getStudentGradeId(username);
     }
 
+    @GetMapping("/student/{username}")
+    public Student getStudentByUsername(@PathVariable String username)
+    {
+        return studentService.getStudentByUsername(username);
+    }
+
     @PostMapping
     public Student createStudent(@RequestBody Student student){
 

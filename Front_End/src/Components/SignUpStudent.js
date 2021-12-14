@@ -67,8 +67,15 @@ function SignUpStudent() {
        axios
          .post("http://localhost:8080/students", student)
          .then(function (response) {
-          const action = setUser(student);
+          axios.get(`http://localhost:8080/students/student/${userName}`)
+       .then(function (response) {
+           console.log(response.data);
+           const action = setUser(response.data);
           dispatch(action);
+       })
+       .catch(function (error) {
+         console.error(error);
+       });
           const action2 = setGradeId(grade);
           dispatch(action2);
           navigate("/Student");
