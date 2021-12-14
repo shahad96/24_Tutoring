@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface StudentRepo extends JpaRepository<Student, Long> {
-    public Student findByUsername(String username);
+    @Query(value ="select grade_id from students where username =?1",nativeQuery = true)
+    public int findGradeIdByUsername(String username);
 
 }

@@ -1,6 +1,12 @@
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUser } from "../reducers/User/User";
+import { useNavigate } from "react-router-dom";
+import {setGradeId} from "../reducers/subjects/Subjects";
 
 function SignUpStudent() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
    let firstName;
    let lastName;
    let userName;
@@ -61,7 +67,11 @@ function SignUpStudent() {
        axios
          .post("http://localhost:8080/students", student)
          .then(function (response) {
-           console.log("in post student");
+          const action = setUser(student);
+          dispatch(action);
+          const action2 = setGradeId(grade);
+          dispatch(action2);
+          navigate("/Student");
          })
          .catch(function (error) {
            console.error(error);

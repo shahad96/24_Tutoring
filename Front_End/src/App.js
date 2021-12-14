@@ -3,6 +3,7 @@ import Home from "./Components/Home";
 import SignUp from "./Components/SignUp";
 import SignUpTeacher from "./Components/SignUpTeacher";
 import SignUpStudent from "./Components/SignUpStudent";
+import Student from "./Components/Student";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -11,9 +12,10 @@ function App() {
     <BrowserRouter>
      <Routes>
           <Route path="/" element={<Home/>} />
-          <Route path="/signup/signup" element={<SignUp/>} />
-          <Route path="/signup/signupteacher" element={<SignUpTeacher/>} />
-          <Route path="/signup/signupstudent" element={<SignUpStudent/>} />
+          <Route path="/signup" element={<SignUp/>} />
+          <Route path="/signup/teacher" element={<SignUpTeacher/>} />
+          <Route path="/signup/student" element={<SignUpStudent/>} />
+          <Route path="/student" element={<Student/>} />
           
           {/* <Route path="/productdetails/:id" element={<ProductDetails />} /> */}
         </Routes>

@@ -2,13 +2,15 @@ import axios from "axios";
 import { useEffect,useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { setSubjects,setGradeId} from "../reducers/subjects/Subjects";
+import { setUser } from "../reducers/User/User";
 import SubjectsForTeacher from "./SubjectsForTeacher";
 
 function SignUpTeacher() {
   const dispatch = useDispatch();
   const state = useSelector((state) => {
     return {
-      teacherSubjects: state.Subjects.teacherSlectedSubjects
+      teacherSubjects: state.Subjects.teacherSlectedSubjects,
+      user: state.User.user
     }; 
   });
   const [firstName,setFirstName]=useState("");
@@ -35,22 +37,7 @@ function SignUpTeacher() {
         console.error(error);
       });
   }, [grade]);
-
-  // function changeGrades() {
-  //   axios
-  //   .get(`http://localhost:8080/subjects/${grade}`)
-  //   .then(function (response) {
-  //     console.log(response.data);
-  //     const action = setSubjects(response.data);
-  //     dispatch(action);
-  //     const action2 = setGradeId(grade);
-  //     dispatch(action2);
-  //   })
-  //   .catch(function (error) {
-  //     console.error(error);
-  //   });
-  // }
-
+  
   function getTeachers(event){
 
     event.preventDefault();
@@ -95,11 +82,12 @@ function SignUpTeacher() {
         phone:phone
       };
       //post teacher
-      console.log(teacher);
-      
       axios
         .post("http://localhost:8080/teachers", teacher)
         .then(function (response) {
+          const action = setUser(teacher);
+        dispatch(action);
+        console.log(teacher);
           //get posted teacher id
           axios
           .get(`http://localhost:8080/teachers/${userName}`)
@@ -110,12 +98,10 @@ function SignUpTeacher() {
               copy=state.teacherSubjects.slice();
               copy.forEach(element => element.teacher.id=response.data);
               console.log(copy);
-              
               axios
               .post("http://localhost:8080/link", state.teacherSubjects)
               .then(function (response) {
                 console.log(response.data);
-                
               })
               .catch(function (error) {
                 console.error(error);
@@ -127,7 +113,7 @@ function SignUpTeacher() {
         })
         .catch(function (error) {
           console.error(error);
-        });
+        }); 
     }//end of password if
     else{
         console.log("password and ");

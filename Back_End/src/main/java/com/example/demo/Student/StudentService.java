@@ -38,6 +38,10 @@ public class StudentService /*implements UserDetailsService*/ {
         return studentRepo.findAll();
     }
 
+    public int getStudentGradeId(String username){
+        return studentRepo.findGradeIdByUsername(username);
+    }
+
     public Student createStudent(Student student){
         return studentRepo.save(student);
     }
