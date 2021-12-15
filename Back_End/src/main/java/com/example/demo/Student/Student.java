@@ -24,6 +24,7 @@ public class Student {
     private String email;
     private String password;
     private Long phone;
+    private String role="student";
     @ManyToOne (fetch = FetchType.EAGER,optional = false)
     @JoinColumn(name ="grade_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -47,6 +48,14 @@ public class Student {
         this.grade = grade;
         this.offers = offers;
         this.ratings = ratings;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Long getId() {

@@ -3,6 +3,7 @@ package com.example.demo.Teacher;
 import com.example.demo.Offer.Offer;
 import com.example.demo.Rating.Rating;
 import com.example.demo.TeacherGradeSubjectLink.TeacherGradeSubjectLink;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Teacher {
     private String email;
     private String password;
     private Long phone;
+    private String role="teacher";
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
     private List<Offer> offers = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
@@ -43,6 +45,14 @@ public class Teacher {
         this.phone = phone;
         this.offers = offers;
         this.ratings = ratings;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Long getId() {
