@@ -4,9 +4,11 @@ import { useDispatch,useSelector } from "react-redux";
 import { setSubjects,setGradeId} from "../reducers/subjects/Subjects";
 import { setUser } from "../reducers/User/User";
 import SubjectsForTeacher from "./SubjectsForTeacher";
+import { useNavigate } from "react-router-dom";
 
 function SignUpTeacher() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const state = useSelector((state) => {
     return {
       teacherSubjects: state.Subjects.teacherSlectedSubjects,
@@ -81,25 +83,25 @@ function SignUpTeacher() {
         password: password,
         phone:phone
       };
+      console.log(teacher);
       //post teacher
       axios
         .post("http://localhost:8080/teachers", teacher)
         .then(function (response) {
-          const action = setUser(teacher);
-        dispatch(action);
-        console.log(teacher);
           //get posted teacher id
           axios
           .get(`http://localhost:8080/teachers/${userName}`)
           .then(function (response) {
               console.log(response.data);
+              const action = setUser(response.data);
+              dispatch(action);
               //post grades and subjects to the teacher
               let copy=[];
               copy=state.teacherSubjects.slice();
-              copy.forEach(element => element.teacher.id=response.data);
+              copy.forEach(element => element.teacher.id= response.data.id);
               console.log(copy);
               axios
-              .post("http://localhost:8080/link", state.teacherSubjects)
+              .post("http://localhost:8080/link", copy)
               .then(function (response) {
                 console.log(response.data);
               })
@@ -110,6 +112,7 @@ function SignUpTeacher() {
           .catch(function (error) {
             console.error(error);
           });
+          navigate("/Teacher");
         })
         .catch(function (error) {
           console.error(error);

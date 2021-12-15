@@ -24,7 +24,7 @@ public class TeacherController {
     }
 
     @GetMapping("/{username}")
-    public int getTeacher(@PathVariable String username){
+    public Teacher getTeacher(@PathVariable String username){
         return teacherService.getTeacher(username);
     }
 

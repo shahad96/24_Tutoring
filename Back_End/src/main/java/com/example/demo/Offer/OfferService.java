@@ -21,6 +21,11 @@ public class OfferService {
         return offerRepo.findAll();
     }
 
+    public List<Offer> getTeacherOffers(String teacherId){
+        Long id = Long.parseLong(teacherId);
+        return offerRepo.findTeacherOffers(id);
+    }
+
     public void createOffer(Offer offer){
         offerRepo.save(offer);
     }

@@ -22,6 +22,11 @@ public class OfferController {
         return offerService.getOffers();
     }
 
+    @GetMapping("/{teacherId}")
+    public List<Offer> getTeacherOffers(@PathVariable String teacherId){
+        return offerService.getTeacherOffers(teacherId);
+    }
+
     @PostMapping
     public void createOffer(@RequestBody Offer offer){
 
