@@ -37,16 +37,16 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
         // Get the user from the request body
         ObjectMapper mapper = new ObjectMapper();
-        Student student = null;
+        com.example.demo.User.User user = null;
         try {
-            student = mapper.readValue(request.getInputStream(), Student.class);
+            user = mapper.readValue(request.getInputStream(), com.example.demo.User.User.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // User information that will be used to authenticate
-        String username = student.getUsername();
-        String password = student.getPassword();
+        String username = user.getUsername();
+        String password = user.getPassword();
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
         return authenticationManager.authenticate(authenticationToken);

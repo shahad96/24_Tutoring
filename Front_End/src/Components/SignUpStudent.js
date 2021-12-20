@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../reducers/User/User";
 import { useNavigate } from "react-router-dom";
 import {setGradeId} from "../reducers/subjects/Subjects";
+import { smart } from "@babel/template";
 
 function SignUpStudent() {
   const dispatch = useDispatch();

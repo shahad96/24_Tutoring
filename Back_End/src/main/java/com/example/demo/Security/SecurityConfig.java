@@ -4,6 +4,7 @@ import com.example.demo.filter.CustomAuthenticationFilter;
 import com.example.demo.filter.CustomAuthorizationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,15 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
-        customAuthenticationFilter.setFilterProcessesUrl("/login/**");
+        customAuthenticationFilter.setFilterProcessesUrl("/login");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // Define the authorization patterns below
-        http.authorizeRequests().anyRequest().permitAll();
+//        http.authorizeRequests().anyRequest().permitAll();
 //        http.authorizeRequests().antMatchers(POST, "/login/**").permitAll();
 //        http.authorizeRequests().antMatchers(POST,"/students/").permitAll();
 //        http.authorizeRequests().antMatchers(POST,"/roles/").permitAll();
-//        http.authorizeRequests().antMatchers( "/students/**").hasAnyAuthority("student");
+        http.authorizeRequests().antMatchers( HttpMethod.POST,"/offers").hasAnyAuthority("student");
 //        http.authorizeRequests().antMatchers(POST, "/admin/**").hasAnyAuthority("ADMIN");
 //        http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
