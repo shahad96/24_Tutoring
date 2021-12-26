@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "teachers")
 public class Teacher {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fName;
     private String lName;

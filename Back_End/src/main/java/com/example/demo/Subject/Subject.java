@@ -14,18 +14,28 @@ import java.util.List;
 public class Subject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String image;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
     private List<TeacherGradeSubjectLink> teacherGradeSubjectLinks = new ArrayList<>();
 
     public Subject() {
     }
 
-    public Subject(Long id, String name) {
+    public Subject(Long id, String name,String image) {
         this.id = id;
         this.name = name;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Long getId() {

@@ -40,37 +40,6 @@ function SignUpTeacher() {
       });
   }, [grade]);
   
-  function getTeachers(event){
-
-    event.preventDefault();
-      let data=[];
-      //get teachers and check if the username and email exist 
-      axios
-      .get("http://localhost:8080/teachers")
-      .then(function (response) {
-          console.log(response.data);
-          data=response.data;
-          for (let i=0; i<data.length;i++){
-              if(data[i].email === email){
-                  setEmailExist(true);
-                  console.log("emailExist",emailExist);
-                  break;
-              }
-              if(data[i].username === userName){
-                  setUsernameExist(true);
-                  console.log("usernameExist",usernameExist);
-                  break;
-              } 
-          }
-          if(!usernameExist && !emailExist){
-              console.log("all false");
-              addTeacher();
-          }
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  }
   function addTeacher() {
       //post the new teacher
       if(password === confirmPassword){
@@ -95,6 +64,7 @@ function SignUpTeacher() {
               console.log(response.data);
               const action = setUser(response.data);
               dispatch(action);
+              
               //post grades and subjects to the teacher
               let copy=[];
               copy=state.teacherSubjects.slice();
@@ -245,8 +215,8 @@ return(
               <option value="8">الصف الثاني متوسط</option>
               <option value="9">الصف الثالث متوسط</option>
               <option value="10">الصف الاول ثانوي</option>
-              <option value="11">الصف الثاني ثانوي</option>
-              <option value="12">الصف الثالث ثانوي</option>
+                <option value="11">علوم إنسانية أدبي</option>
+                <option value="12">علوم طبيعية علمي</option>
             </select>
           </div>
         </div>
@@ -256,7 +226,7 @@ return(
       <div className="form-group">
         <label className="col-md-4 control-label" />
         <div className="col-md-4"><br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" className="btn btn-warning" onClick={getTeachers}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تسجيل جديد <span className="glyphicon glyphicon-send" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+          <button type="submit" className="btn btn-warning" onClick={addTeacher}>تسجيل جديد <span className="glyphicon glyphicon-send" /></button>
         </div>
       </div>
     </fieldset>

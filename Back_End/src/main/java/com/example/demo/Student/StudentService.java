@@ -29,9 +29,20 @@ public class StudentService {
         return studentRepo.findById(id);
     }
 
+    public Student getStudentByUserId(String userId){
+//        System.out.println(studentRepo.findByUserId(userId));
+        return studentRepo.findByUserId(userId);
+    }
+
     public Student createStudent(Student student){
 
-        return studentRepo.save(student);
+        System.out.println(student);
+        if(studentRepo.findByEmail(student.getEmail()) == null){
+            System.out.println(studentRepo.findByEmail(student.getEmail()));
+        return studentRepo.save(student);}
+        else{
+            return null;
+        }
     }
 
     public void updateStudent(String id){

@@ -13,7 +13,7 @@ import java.util.Collection;
 public class Offer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String note;
     private Long subjectId;
@@ -24,7 +24,7 @@ public class Offer {
     @JoinColumn(name ="student_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Student student;
-    @ManyToOne (fetch = FetchType.LAZY,optional = false)
+    @ManyToOne (fetch = FetchType.LAZY,optional = true)
     @JoinColumn(name ="teacher_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Teacher teacher;

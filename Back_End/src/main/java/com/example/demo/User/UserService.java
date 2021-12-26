@@ -46,8 +46,12 @@ public class UserService implements UserDetailsService{
 
     public User createUser(User user){
 
+        if(userRepo.findByUsername(user.getUsername()) == null){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepo.save(user);
+        return userRepo.save(user);}
+        else{
+            return null;
+        }
     }
 
     public void updateUser(String id){

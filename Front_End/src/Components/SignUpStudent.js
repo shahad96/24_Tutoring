@@ -1,121 +1,123 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setUser } from "../reducers/User/User";
+import { useDispatch,useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {setGradeId} from "../reducers/subjects/Subjects";
-import { smart } from "@babel/template";
+import { useState } from "react";
+import { setToken,setUser } from "../reducers/User/User";
 
 function SignUpStudent() {
+  const state = useSelector((state) => {
+    return {
+      user: state.User.user,
+      token: state.User.token
+    }; 
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-   let firstName;
-   let lastName;
-   let userName;
-   let email;
-   let password;
-   let confirmPassword;
-   let phone;
-   let grade=1;
-   let emailExist=false;
-   let usernameExist=false;
+    // use state varibals to save user inputs
+  const [firstName,setFirstName]=useState("");
+  const [lastName,setLastName]=useState("");
+  const [userName,setUserName]=useState("");
+  const [email,setEmail]=useState("");
+  const [password,setPassword]=useState("");
+  const [confirmPassword,setConfirmPassword]=useState("");
+  const [phone,setPhone]=useState("");
+  const [grade,setGrade]=useState(1);
 
-   function getStudents(event){
-
-    event.preventDefault();
-       let data=[];
-       //get teachers and check if the username and email exist 
-       axios
-       .get("http://localhost:8080/students")
-       .then(function (response) {
-           console.log(response.data);
-           data=response.data;
-           for (let i=0; i<data.length;i++){
-            //    data[i].grade;
-               if(data[i].email === email){
-                   emailExist=true;
-                   console.log("emailExist",emailExist);
-                   break;
-               }
-               if(data[i].username === userName){
-                   usernameExist=true;
-                   console.log("usernameExist",usernameExist);
-                   break;
-               } 
-           }
-           if(!usernameExist && !emailExist){
-               console.log("all false");
-               addStudent();
-           }
-       })
-       .catch(function (error) {
-         console.error(error);
-       });
-   }
    function addStudent(event) {
-       //post the new teacher
+    event.preventDefault();
+       //post the new student
        if(password === confirmPassword){
-       console.log("in add teacher");
-       // event.preventDefault();
-       let student = {
-         fName: firstName,
-         lName: lastName,
-         username: userName,
-         email: email,
-         password: password,
-         phone:phone,
-         grade:{id:grade}
-       };
+       console.log("in add student");
+       event.preventDefault();
+       let user = {
+        username: userName,
+        password: password,
+        role:"student"
+      };
        axios
-         .post("http://localhost:8080/students", student)
+         .post("http://localhost:8080/users", user)
          .then(function (response) {
-          axios.get(`http://localhost:8080/students/student/${userName}`)
-       .then(function (response) {
-           console.log(response.data);
+           if(response.data == null){
+             console.log(response.data);
+             
+             console.log("username exist");
+           }
+          else{
+            let student = {
+              fName: firstName,
+              lName: lastName,
+              email: email,
+              phone:phone,
+              grade:{id:grade},
+              user:{id:response.data.id}
+            };
+            console.log(student);
+            
+            axios
+          .post("http://localhost:8080/students", student)
+          .then(function (response) {
+            if(response.data === null){
+              console.log("email exist");
+            }
+            else{
+              console.log(response.data);
            const action = setUser(response.data);
           dispatch(action);
-       })
-       .catch(function (error) {
-         console.error(error);
-       });
-          const action2 = setGradeId(grade);
-          dispatch(action2);
-          navigate("/Student");
-         })
+          //looooooooooooooooooooooooooooooooooooooooooooog in
+          user ={username:userName,password:password}
+          axios
+        .post("http://localhost:8080/login",user)
+        .then(function (response) {
+            console.log(response.data);
+            // save the token in redux
+            const action_token =setToken(response.data.access_token);
+            dispatch(action_token);
+                navigate("/student");
+        })//login
+        .catch(function (error) {
+          console.error(error); 
+        })
+            }
+          })//add student
+          .catch(function (error) {
+            console.error(error);
+          });
+          }//end of else
+         })//add user
          .catch(function (error) {
            console.error(error);
          });
      }//end of password if
      else{
-         console.log("password and ");
+         console.log("password and congirm password not equale");
          
      }
    }
    const changeFirstName = (e) => {
-       firstName = e.target.value;
+    setFirstName(e.target.value);
      };
      const changeLastName = (e) => {
-       lastName = e.target.value;
+      setLastName(e.target.value);
      };
      const changeUserName = (e) => {
-       userName = e.target.value;
-       usernameExist=false
+      setUserName(e.target.value);
      };
      const changeEmail = (e) => {
-       email = e.target.value;
-       emailExist=false
+       setEmail(e.target.value);
+       
      };
      const changePassword = (e) => {
-       password = e.target.value;
+       setPassword(e.target.value);
      };
      const changeConfirmPassword = (e) => {
-       confirmPassword = e.target.value;
+       setConfirmPassword(e.target.value);
      };
      const changePhone = (e) => {
-       phone = e.target.value;
+       setPhone(e.target.value);
      };
      const changeGrade = (e) => {
-        grade = e.target.value;
-        console.log(grade)
+        setGrade(e.target.value);
       };
    return (
     <div className="container">
@@ -209,8 +211,8 @@ function SignUpStudent() {
                 <option value="8">الصف الثاني متوسط</option>
                 <option value="9">الصف الثالث متوسط</option>
                 <option value="10">الصف الاول ثانوي</option>
-                <option value="11">الصف الثاني ثانوي</option>
-                <option value="12">الصف الثالث ثانوي</option>
+                <option value="11">علوم إنسانية أدبي</option>
+                <option value="12">علوم طبيعية علمي</option>
               </select>
             </div>
           </div>
@@ -219,7 +221,7 @@ function SignUpStudent() {
         <div className="form-group">
           <label className="col-md-4 control-label" />
           <div className="col-md-4"><br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" className="btn btn-warning" onClick={getStudents}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;تسجيل جديد <span className="glyphicon glyphicon-send" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            <button type="submit" className="btn btn-warning" onClick={addStudent}>تسجيل جديد <span className="glyphicon glyphicon-send" /></button>
           </div>
         </div>
       </fieldset>

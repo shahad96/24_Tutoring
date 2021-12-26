@@ -15,17 +15,13 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique=true)
     private String username;
     private String password;
-//    @ManyToMany
-//    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id",
-//            referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id",
-//            referencedColumnName = "id"))
     private String role;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "user")
     private Student student;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Teacher teacher;
@@ -33,6 +29,11 @@ public class User {
     public User() {
     }
 
+    public User(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
     public User(Long id, String username, String password, String role) {
         this.id = id;
         this.username = username;
@@ -86,5 +87,17 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", student=" + student +
+                ", teacher=" + teacher +
+                '}';
     }
 }

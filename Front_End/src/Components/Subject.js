@@ -19,7 +19,7 @@ function Subject({index,ele}){
       if(index % 2 === 0 && index % 4 === 0){
         color =state.colors[0];
       }
-      else if(!(index % 2 === 0) && (index-1%4 === 0)){
+      else if(!(index % 2 === 0) && ((index-1)%4 === 0)){
         color =state.colors[1];
       }
      else if(index % 2 === 0 && !(index % 4 === 0)){

@@ -35,10 +35,16 @@ public class StudentController {
         return studentService.getStudentById(id);
     }
 
+    @GetMapping("/student/user/{userId}")
+    public Student getStudentByUserId(@PathVariable String userId)
+    {
+        return studentService.getStudentByUserId(userId);
+    }
+
     @PostMapping
     public Student createStudent(@RequestBody Student student){
 
-
+        System.out.println(student);
         return studentService.createStudent(student);
     }
 

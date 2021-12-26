@@ -14,7 +14,7 @@ import java.util.List;
 public class Grade {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @ManyToMany
@@ -23,7 +23,7 @@ public class Grade {
             referencedColumnName = "id"))
     private Collection<Subject> subjects;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grade")
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "grade")
     private List<Student> students = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
@@ -68,5 +68,16 @@ public class Grade {
 
     public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    @Override
+    public String toString() {
+        return "Grade{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", subjects=" + subjects +
+                ", students=" + students +
+                ", teacherGradeSubjectLinks=" + teacherGradeSubjectLinks +
+                '}';
     }
 }

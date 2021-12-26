@@ -32,7 +32,12 @@ public class TeacherService /*implements UserDetailsService*/ {
     }
 
     public Teacher createTeacher(Teacher teacher){
-        return teacherRepo.save(teacher);
+
+        if(teacherRepo.findByEmail(teacher.getEmail()) == null){
+        return teacherRepo.save(teacher);}
+        else{
+            return null;
+        }
     }
 
     public void updateTeacher(String id){
