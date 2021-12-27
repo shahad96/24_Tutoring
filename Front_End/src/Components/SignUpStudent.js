@@ -29,7 +29,6 @@ function SignUpStudent() {
        //post the new student
        if(password === confirmPassword){
        console.log("in add student");
-       event.preventDefault();
        let user = {
         username: userName,
         password: password,

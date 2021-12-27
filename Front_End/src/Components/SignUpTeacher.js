@@ -40,53 +40,65 @@ function SignUpTeacher() {
       });
   }, [grade]);
   
-  function addTeacher() {
+  function addTeacher(event) {
+    event.preventDefault();
       //post the new teacher
       if(password === confirmPassword){
-      console.log(password);
-      let teacher = {
-        fName: firstName,
-        lName: lastName,
-        username: userName,
-        email: email,
-        password: password,
-        phone:phone
-      };
-      console.log(teacher);
-      //post teacher
-      axios
-        .post("http://localhost:8080/teachers", teacher)
-        .then(function (response) {
-          //get posted teacher id
-          axios
-          .get(`http://localhost:8080/teachers/${userName}`)
-          .then(function (response) {
-              console.log(response.data);
-              const action = setUser(response.data);
-              dispatch(action);
-              
-              //post grades and subjects to the teacher
-              let copy=[];
-              copy=state.teacherSubjects.slice();
-              copy.forEach(element => element.teacher.id= response.data.id);
-              console.log(copy);
-              axios
-              .post("http://localhost:8080/link", copy)
+        let user = {
+          username: userName,
+          password: password,
+          role:"teacher"
+        };
+        axios
+         .post("http://localhost:8080/users", user)
+         .then(function (response) {
+           if(response.data == null){
+             console.log(response.data);
+             console.log("username exist");
+           }
+           //add teacher
+          else{
+            let teacher = {
+              fName: firstName,
+              lName: lastName,
+              email: email,
+              phone:phone,
+              user:{id:response.data.id}
+            };
+            console.log(teacher);
+            //post teacher
+            axios
+              .post("http://localhost:8080/teachers", teacher)
               .then(function (response) {
-                console.log(response.data);
+                    const action = setUser(response.data);
+                    dispatch(action);
+                    
+                    //post grades and subjects to the teacher
+                    let copy=[];
+                    copy=state.teacherSubjects.slice();
+                    copy.forEach(element => element.teacher.id= response.data.id);
+                    console.log(copy);
+                    axios
+                    .post("http://localhost:8080/link", copy)
+                    .then(function (response) {
+                      console.log(response.data);
+                    })
+                    .catch(function (error) {
+                      console.error(error);
+                    });
+                navigate("/Teacher");
               })
               .catch(function (error) {
                 console.error(error);
-              });
+              }); 
+              //--------------------------------------------------------
+
+          }
           })
           .catch(function (error) {
-            console.error(error);
-          });
-          navigate("/Teacher");
-        })
-        .catch(function (error) {
-          console.error(error);
-        }); 
+            console.error(error); 
+          })
+      
     }//end of password if
     else{
         console.log("password and ");

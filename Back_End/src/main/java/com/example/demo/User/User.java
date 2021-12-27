@@ -21,7 +21,7 @@ public class User {
     private String username;
     private String password;
     private String role;
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Student student;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Teacher teacher;
