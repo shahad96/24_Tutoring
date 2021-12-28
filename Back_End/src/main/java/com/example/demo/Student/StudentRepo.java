@@ -13,6 +13,6 @@ public interface StudentRepo extends JpaRepository<Student, Long> {
     public int findGradeIdByUsername(String id);
     public Student findById(String id);
     public Student findByEmail(String email);
-    @Query(value ="select students.* ,grades.id ,users.id from students join grades on students.grade_id =grades.id join users on students.user_id = users.id where user_id =?1",nativeQuery = true)
+    @Query(value ="select * from students where user_id =?1",nativeQuery = true)
     public Student findByUserId(String userId);
 }

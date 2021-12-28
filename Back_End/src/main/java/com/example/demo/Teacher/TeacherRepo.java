@@ -9,7 +9,10 @@ import java.util.List;
 
 @Repository
 public interface TeacherRepo extends JpaRepository<Teacher, Long> {
-    @Query(value ="select id from teachers where username =?1",nativeQuery = true)
+
     public Teacher findById(String id);
     public Teacher findByEmail(String email);
+
+    @Query(value ="select * from teachers where user_id =?1",nativeQuery = true)
+    public Teacher findByUserId(String userid);
 }

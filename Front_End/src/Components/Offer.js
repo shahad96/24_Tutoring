@@ -7,18 +7,36 @@ function Offer(){
     const state = useSelector((state) => {
         return {
             offerSubject: state.Subjects.offerSubject,
-            student: state.User.user
+            student: state.User.user,
+            token: state.User.token
         }; 
       });
     function makeOffesr(){
-    let offer={note:note,subjectId:state.offerSubject.id,studentAccept:false,teacherAccept:false,zoomLink:null,student:{id:state.student.id},teacher:{id:18}  
+    let offer={note:note,subjectId:state.offerSubject.id,studentAccept:false,teacherAccept:false,zoomLink:null,student:{id:state.student.id}
         }
         console.log(offer);
         
+        const config={
+          headers:{Authorization:`Bearer ${state.token}`}
+        }  
+        console.log(state.token);
+        
         axios
-        .post("http://localhost:8080/offers",offer)
+        .post("http://localhost:8080/offers",offer,config)
         .then(function (response) {
           console.log(response.data);
+          let message={
+            message:"shahad ali"
+        }
+          axios
+        .post("http://localhost:8181/send",message)
+        .then(function (response) {
+          console.log(response.data);
+          
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
         })
         .catch(function (error) {
           console.error(error);

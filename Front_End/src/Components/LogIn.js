@@ -40,14 +40,15 @@ function LogIn(){
             var decoded = jwt_decode(response.data.access_token);
             console.log(decoded);
             
+            const config={
+              headers:{Authorization:`Bearer ${state.token}`}
+            }
+            
             // if the user is student go to student page and if it teacher go to teacher page
             if(decoded.roles[0]== "student"){
               console.log("in get student");
               
               // get the student using the login user id 
-              const config={
-                headers:{Authorization:`Bearer ${state.token}`}
-              }
               axios
               .get(`http://localhost:8080/students/student/user/${decoded.id}`,config)
               .then(function (response) {
@@ -60,7 +61,18 @@ function LogIn(){
               });
                 navigate("/student");
             }
-            else if(decoded.roles[0]== "user is teacher"){
+            else if(decoded.roles[0]== "teacher"){
+              axios
+              .get(`http://localhost:8080/teachers/user/${decoded.id}`,config)
+              .then(function (response) {
+            const action2 =setUser(response.data);
+            dispatch(action2);
+                console.log(response.data);
+              })
+              .catch(function (error) {
+                console.error(error);
+              });
+              
                 navigate("/teacher");
             }
         })

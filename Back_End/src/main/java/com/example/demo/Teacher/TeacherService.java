@@ -31,6 +31,10 @@ public class TeacherService /*implements UserDetailsService*/ {
         return teacherRepo.findById(id);
     }
 
+    public Teacher getTeacherByUserId(String id){
+        return teacherRepo.findByUserId(id);
+    }
+
     public Teacher createTeacher(Teacher teacher){
 
         if(teacherRepo.findByEmail(teacher.getEmail()) == null){
@@ -45,16 +49,5 @@ public class TeacherService /*implements UserDetailsService*/ {
         Teacher teacher = teacherRepo.findById(longId).orElse(null);
         teacherRepo.save(teacher);
     }
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        Teacher teacher= teacherRepo.findByUsername(username);
-//        if(teacher == null){
-//            System.out.println("student does not exist");
-//            throw new UsernameNotFoundException("student does not exist");
-//        }
-//        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-//        authorities.add(new SimpleGrantedAuthority(teacher.getRole()));
-//
-//        return new org.springframework.security.core.userdetails.User(teacher.getUsername(),teacher.getPassword(),authorities);
-//    }
+
 }

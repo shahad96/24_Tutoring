@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect,useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { setSubjects,setGradeId} from "../reducers/subjects/Subjects";
-import { setUser } from "../reducers/User/User";
+import { setUser,setToken } from "../reducers/User/User";
 import SubjectsForTeacher from "./SubjectsForTeacher";
 import { useNavigate } from "react-router-dom";
 
@@ -70,6 +70,12 @@ function SignUpTeacher() {
             axios
               .post("http://localhost:8080/teachers", teacher)
               .then(function (response) {
+
+                if(response.data === null){
+                  console.log("email exist");
+                }
+                else{
+                
                     const action = setUser(response.data);
                     dispatch(action);
                     
@@ -82,12 +88,27 @@ function SignUpTeacher() {
                     .post("http://localhost:8080/link", copy)
                     .then(function (response) {
                       console.log(response.data);
+                      //looooooooooooooooooooooooooooooooooooooooooooog in
+          user ={username:userName,password:password}
+          axios
+        .post("http://localhost:8080/login",user)
+        .then(function (response) {
+            console.log(response.data);
+            // save the token in redux
+            const action_token =setToken(response.data.access_token);
+            dispatch(action_token);
+                navigate("/teacher");
+        })//login
+        .catch(function (error) {
+          console.error(error); 
+        })
                     })
                     .catch(function (error) {
                       console.error(error);
                     });
-                navigate("/Teacher");
+                  }
               })
+            
               .catch(function (error) {
                 console.error(error);
               }); 

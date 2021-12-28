@@ -16,6 +16,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.List;
 
@@ -54,6 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Define the authorization patterns below
 //        http.authorizeRequests().anyRequest().permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/login").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/send").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/ws-message").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/users").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/link").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/users").permitAll();
@@ -65,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/students/**").hasAnyAuthority("student");
 //        http.authorizeRequests().antMatchers(POST,"/roles/").permitAll();
         http.authorizeRequests().antMatchers( HttpMethod.POST,"/offers").hasAnyAuthority("student");
+        http.authorizeRequests().antMatchers( HttpMethod.GET,"/offers").hasAnyAuthority("teacher");
 //        http.authorizeRequests().antMatchers(POST, "/admin/**").hasAnyAuthority("ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
@@ -76,5 +82,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception{
         return super.authenticationManagerBean();
     }
+
 
 }

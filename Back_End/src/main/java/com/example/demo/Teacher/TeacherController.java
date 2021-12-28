@@ -28,6 +28,11 @@ public class TeacherController {
         return teacherService.getTeacher(id);
     }
 
+    @GetMapping("/user/{id}")
+    public Teacher getTeacherByUserId(@PathVariable String id){
+        return teacherService.getTeacherByUserId(id);
+    }
+
     @PostMapping
     public Teacher createTeacher(@RequestBody Teacher teacher){
 
