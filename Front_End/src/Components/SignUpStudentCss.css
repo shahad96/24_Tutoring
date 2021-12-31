@@ -1,0 +1,44 @@
+/* .topp:before, .bottomm:before, .topp:after, .bottomm:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 200vmax;
+    height: 200vmax;
+    top: 50%;
+    left: 50%;
+    margin-top: -100vmax;
+    transition: all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+    z-index: 10;
+    opacity: 0.65;
+    margin-left: 300px;
+    transition-delay: 0s;
+    transform-origin: -300px 50%;
+
+}
+
+.container {
+    direction: rtl;
+	 position: absolute;
+	 width: 100%;
+	 height: 100%;
+	 overflow: hidden;
+}
+
+.topp:before {
+    transform: rotate(135deg);
+    background: #71b48f;
+  }
+  
+ 
+.topp:after {
+    transform: rotate(135deg);
+    background: #77c6dc;
+}
+.bottomm:before {
+    transform: rotate(-135deg);
+    background: #e2b952;
+}
+.bottomm:after {
+    transform: rotate(-135deg);
+    background: #db7451;
+} */

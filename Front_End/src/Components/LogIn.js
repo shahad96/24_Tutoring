@@ -4,6 +4,9 @@ import { useDispatch,useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { setToken,setUser } from "../reducers/User/User";
+import './LogInCss.css';
+import Button from 'react-bootstrap/Button';
+import logo from "../images/zdny_logo.png";
 
 
 function LogIn(){
@@ -17,6 +20,7 @@ function LogIn(){
     const navigate = useNavigate();
     const [userName,setUserName]=useState("");
     const [password,setPassword]=useState("");
+    const [toggel,setToggel]=useState(false);
 
     // save the username and password from input
     const changeUserName = (e) => {
@@ -54,12 +58,12 @@ function LogIn(){
               .then(function (response) {
             const action2 =setUser(response.data);
             dispatch(action2);
+            navigate("/student");
                 console.log(response.data);
               })
               .catch(function (error) {
                 console.error(error);
               });
-                navigate("/student");
             }
             else if(decoded.roles[0]== "teacher"){
               axios
@@ -78,39 +82,44 @@ function LogIn(){
         })
         .catch(function (error) {
           console.error(error);
+          setToggel(true);
           console.log("اسم المستخدم او كلمة المرور غير صحيحة");
           
         })
       }
     return(
-        <div className="container">
+    <div className="containerr">
+      <div className="top">
+      <div className="bottom">
+      <div className="center">
+      <div>
+        {/* logo */}
+        <img src={logo}/>
       {/* Text input*/}
-      <div className="form-group">
-        <label className="col-md-4 control-label">اسم المستخدم</label>  
-        <div className="col-md-4 inputGroupContainer">
-          <div className="input-group">
-            <span className="input-group-addon"><i className="glyphicon glyphicon-user" /></span>
-            <input name="user_name" placeholder="اسم المستخدم" className="form-control" type="text" onChange={changeUserName}/>
-          </div>
-        </div>
+      <div >
+        <label >اسم المستخدم</label>  
+        
+            <input name="user_name" placeholder="اسم المستخدم" type="text" onChange={changeUserName}/>
+         
       </div>
       {/* Text input*/}
-      <div className="form-group">
-        <label className="col-md-4 control-label">كلمة المرور</label> 
-        <div className="col-md-4 inputGroupContainer">
-          <div className="input-group">
-            <span className="input-group-addon"><i className="glyphicon glyphicon-user" /></span>
-            <input name="user_password" placeholder="كلمة المرور" className="form-control" type="password" onChange={changePassword}/>
-          </div>
-        </div>
+      <div>
+        <label >كلمة المرور</label> 
+            <input name="user_password" placeholder="كلمة المرور"  type="password" onChange={changePassword}/>
+      </div>
+      <div>
+      {toggel && <h7>*اسم المستخدم او كلمة المرور غير صحيحة</h7>}
       </div>
       {/* Button */}
-      <div className="form-group">
-        <label className="col-md-4 control-label" />
-        <div className="col-md-4"><br /><button type="submit" className="btn btn-warning" onClick={logInUser}>تسجيل جديد <span className="glyphicon glyphicon-send" /></button>
-        </div>
       </div>
-        </div>
+      <div>
+        <br/>
+        <Button variant="secondary" onClick={logInUser}>تسجيل جديد </Button>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
     );
 }
 export default LogIn;

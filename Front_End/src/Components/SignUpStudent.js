@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import {setGradeId} from "../reducers/subjects/Subjects";
 import { useState } from "react";
 import { setToken,setUser } from "../reducers/User/User";
+import Button from 'react-bootstrap/Button';
+import './SignUpStudentCss.css';
 
 function SignUpStudent() {
   const state = useSelector((state) => {
@@ -119,11 +121,15 @@ function SignUpStudent() {
         setGrade(e.target.value);
       };
    return (
+     <div className="topp">
+     <div className="bottomm">
+
+       
     <div className="container">
     <form className="well form-horizontal" method="post" id="contact_form">
       <fieldset>
         {/* Form Name */}
-        <legend><center><h2><b>إنشاء حساب</b></h2></center></legend><br />
+        <legend><h2><b>إنشاء حساب</b></h2></legend><br />
         {/* Text input*/}
         <div className="form-group">
           <label className="col-md-4 control-label">الاسم الاول</label>  
@@ -220,12 +226,15 @@ function SignUpStudent() {
         <div className="form-group">
           <label className="col-md-4 control-label" />
           <div className="col-md-4"><br />
-            <button type="submit" className="btn btn-warning" onClick={addStudent}>تسجيل جديد <span className="glyphicon glyphicon-send" /></button>
+            <Button variant="secondary" onClick={addStudent}>تسجيل جديد </Button>
           </div>
         </div>
       </fieldset>
     </form>
   </div>
+
+  </div>
+     </div>
   );
   }
   
