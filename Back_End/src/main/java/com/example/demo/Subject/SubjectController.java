@@ -22,6 +22,12 @@ public class SubjectController {
         return subjectService.getSubjects();
     }
 
+    @GetMapping("/subject/{id}")
+    public Subject getSubject(@PathVariable String id){
+        System.out.println(id);
+        return subjectService.getSubject(id);
+    }
+
     @PostMapping
     public void createSubject(@RequestBody Subject subject){
 

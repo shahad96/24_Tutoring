@@ -1,5 +1,6 @@
 .container{
     direction: rtl;
+    align-content: center;
 }
 
 #grid{
@@ -7,4 +8,41 @@
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
         gap: 1rem;
         margin: 2%;
+}
+
+.image{
+    background-image: url("https://www.ldatschool.ca/wp-content/uploads/2014/02/A-teachers-journey-with-student-self-advocacy.jpg");
+    width: 100%;
+    height: 600px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbarr{
+    display: flex;
+    width: 100%;
+}
+
+.logo{
+    width: 90px;
+    height: 80px;
+    float: right;
+    margin-right: 12px;
+    margin-top: 10px;
+}
+
+h5{
+    margin-left: 12px;
+    padding-top:12px; 
+}
+
+.signUp{
+    padding-top: 250px;
+    padding-right: 20px;
+    direction: rtl;
+}
+
+.login{
+    text-decoration: none;
+    color: black;
 }

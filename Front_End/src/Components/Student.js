@@ -1,8 +1,14 @@
 import Subjects from "./Subjects";
+import Header from "./Header";
 import { useSelector,useDispatch } from "react-redux";
 import axios from "axios";
 import { setSubjects} from "../reducers/subjects/Subjects";
 import { useEffect } from "react";
+import logo from "../images/zdny_logo.png";
+import { BsBoxArrowLeft } from "react-icons/bs";
+import './SignUpStudentCss.css';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 function Student(){
   const dispatch = useDispatch();
@@ -33,7 +39,8 @@ function Student(){
           });
       }, []);
     return(
-        <div>
+      <div>
+        <Header/>
             <Subjects/>
         </div>
     );

@@ -5,6 +5,7 @@ import { setSubjects,setGradeId} from "../reducers/subjects/Subjects";
 import { setUser,setToken } from "../reducers/User/User";
 import SubjectsForTeacher from "./SubjectsForTeacher";
 import { useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 function SignUpTeacher() {
   const dispatch = useDispatch();
@@ -258,8 +259,8 @@ return(
       {/* Button */}
       <div className="form-group">
         <label className="col-md-4 control-label" />
-        <div className="col-md-4"><br />
-          <button type="submit" className="btn btn-warning" onClick={addTeacher}>تسجيل جديد <span className="glyphicon glyphicon-send" /></button>
+        <div className="col-md-4">
+          <Button variant="secondary" type="submit"  onClick={addTeacher}>تسجيل جديد <span className="glyphicon glyphicon-send" /></Button>
         </div>
       </div>
     </fieldset>

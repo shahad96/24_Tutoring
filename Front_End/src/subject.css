@@ -15,5 +15,6 @@
   #grid{
     display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
+        direction: rtl;
         /* gap: 1rem; */
 }

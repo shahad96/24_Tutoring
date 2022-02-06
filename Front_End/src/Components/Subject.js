@@ -28,18 +28,20 @@ function Subject({index,ele}){
       else if(!(index % 2 === 0)){
         color =state.colors[3];
       }
-      let x ="https://yt3.ggpht.com/f75PjiLSsxkjVMk-HOyHItBpbJlqoeSpSYNRAGI7gNHYYxXCTTRcnEzdPrpKwVXqJ9tBBpWwMF4=s900-c-k-c0x00ffffff-no-rj";
+      
 
       function makeOffesr(){ 
           const action = setOfferSubject(ele);
         dispatch(action);
         navigate("/offer");
       };
+      
 return(
+  
     <div>
-        <div className="card" style={{backgroundColor:color}} onClick={makeOffesr}>
-            <img src={x} style={{width:"100%"}}/>
-            <div className="container" >
+        <div className="my-5 py-4 Sh-card " style={{backgroundColor:color}}  onClick={makeOffesr}>
+            <img className="card-img-top iamge-prodect " src={ele.image} style={{width:"100%",height:"200px"}}/>
+            <div  className="card-body text-center" >
                 <h4><b>{ele.name}</b></h4> 
                 {/* <p>Architect  Engineer</p>  */}
             </div>

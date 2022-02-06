@@ -1,9 +1,18 @@
 import axios from "axios";
 import { useEffect,useState } from "react";
 import { useSelector,useDispatch } from "react-redux";
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import './SignUpStudentCss.css';
+import logo from "../images/zdny_logo.png";
+import SockJsClient from 'react-stomp';
+
+const SOCKET_URL = 'http://localhost:8181/ws-message';
 
 function Offer(){
     const [note,setNote]=useState(" ");
+    const [toggel,setToggel]=useState(true);
+    const [toggel2,setToggel2]=useState(false);
     const state = useSelector((state) => {
         return {
             offerSubject: state.Subjects.offerSubject,
@@ -32,6 +41,8 @@ function Offer(){
         .post("http://localhost:8181/send",message)
         .then(function (response) {
           console.log(response.data);
+          // هنا الانتقال الى المرحلة التالية
+          
           
         })
         .catch(function (error) {
@@ -41,22 +52,44 @@ function Offer(){
         .catch(function (error) {
           console.error(error);
         });
+        setToggel(false);
+        setToggel2(true);
     }
     function changeNote(e){
         setNote(e.target.value)
     }
+    let onConnected = () => {
+      console.log("Connected!!")
+    }
+
+    function getOffers(){
+
+    }
         return(
-            <div>
-                <div className="form-group">
-        <label className="col-md-4 control-label">:يمكنك اضافة ملاحظة على الطلب</label>  
-        <div className="col-md-4 inputGroupContainer">
-          <div className="input-group">
-            <span className="input-group-addon"><i className="glyphicon glyphicon-user" /></span>
-            <input name="user_name" className="form-control" type="text" onChange={changeNote}/>
-          </div>
-        </div>
+          
+          <div className="cen" style={{backgroundColor:"#71B48F"}}> 
+            <Card className="offercard">
+            <img src={logo}/>
+            {toggel2 && <h5 style={{direction: "rtl"}}>في انتظار الردود ...</h5>}
+               {toggel && <div style={{direction: "rtl"}}><div  style={{direction: "rtl"}}>
+        <label >يمكنك اضافة ملاحظة على الطلب:</label> 
+            <input name="user_name" className="form-control offerInput" type="text" onChange={changeNote}/>
+          
       </div>
-      <button onClick={makeOffesr}>أرسل الطلب</button>
+      <br/>
+      <Button variant="secondary" onClick={makeOffesr}>إرسال الطلب</Button></div>}
+            </Card>
+            <div>
+      <SockJsClient
+        url={SOCKET_URL}
+        topics={['/topic/message']}
+        onConnect={onConnected}
+        onDisconnect={console.log("Disconnected!")}
+        onMessage={getOffers}
+        debug={false}
+      />
+      {/* <div>{message}</div> */}
+    </div>
             </div>
         );
 }

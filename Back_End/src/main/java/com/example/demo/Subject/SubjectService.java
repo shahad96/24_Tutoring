@@ -23,6 +23,11 @@ public class SubjectService {
         return subjectRepo.findAll();
     }
 
+    public Subject getSubject(String id){
+        System.out.println(id);
+        Long subject_id = Long.parseLong(id);
+        return subjectRepo.getById(subject_id);
+    }
     public void createSubject(Subject subject){
         subjectRepo.save(subject);
     }

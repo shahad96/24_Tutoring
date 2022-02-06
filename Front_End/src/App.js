@@ -1,6 +1,6 @@
 import './App.css';
 import Home from "./Components/Home";
-import SignUp from "./Components/SignUp";
+import LogIn from "./Components/LogIn";
 import SignUpTeacher from "./Components/SignUpTeacher";
 import SignUpStudent from "./Components/SignUpStudent";
 import Student from "./Components/Student";
@@ -14,7 +14,7 @@ function App() {
     <BrowserRouter>
      <Routes>
           <Route path="/" element={<Home/>} />
-          <Route path="/signup" element={<SignUp/>} />
+          <Route path="/Login" element={<LogIn/>} />
           <Route path="/signup/teacher" element={<SignUpTeacher/>} />
           <Route path="/signup/student" element={<SignUpStudent/>} />
           <Route path="/student" element={<Student/>} />

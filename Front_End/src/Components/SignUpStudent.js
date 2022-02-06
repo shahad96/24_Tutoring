@@ -121,8 +121,6 @@ function SignUpStudent() {
         setGrade(e.target.value);
       };
    return (
-     <div className="topp">
-     <div className="bottomm">
 
        
     <div className="container">
@@ -225,7 +223,7 @@ function SignUpStudent() {
         {/* Button */}
         <div className="form-group">
           <label className="col-md-4 control-label" />
-          <div className="col-md-4"><br />
+          <div className="col-md-4">
             <Button variant="secondary" onClick={addStudent}>تسجيل جديد </Button>
           </div>
         </div>
@@ -233,8 +231,6 @@ function SignUpStudent() {
     </form>
   </div>
 
-  </div>
-     </div>
   );
   }
   
